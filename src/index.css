@@ -15,11 +15,14 @@ code {
 .rowC {
   display: flex;
   flex-direction: row;
+  width: 100%;
+  
 }
 
 .colC {
   display: flex;
   flex-direction: column;
+  width: 25%;
 }
 
 .tripsViz {
