@@ -1,9 +1,8 @@
 import React, {useState, useRef} from 'react';
-import './App.css';
-import styled, { css } from 'styled-components';
-import Option1 from './Option1';
+import { Button } from './constants';
 
-const App = () => {
+
+const Option1 = () => {
 
   const inputRef = useRef(null);
 
@@ -74,23 +73,10 @@ const App = () => {
   return (
     <div className="App">
       <header className="App-header">
-
-
         <div>
-          <Option1></Option1>
-
-
-          {data.data.map(person => {
-            return (
-              <div key={person.id}>
-                <h4>{person.email}</h4>
-                <h4>{person.first_name}</h4>
-                <h4>{person.last_name}</h4>
-                <br />
-              </div>
-            );
-          })}
-
+          <Button onClick={handleClick}>
+            Option 1
+          </Button>
         </div>
         <div>
           <input
@@ -99,17 +85,11 @@ const App = () => {
           type="file"
           onChange={handleFileChange}
         />
-
         <button onClick={handleClick1}>Open file upload box</button>
-
         </div>
-          
-
-
-
       </header>
     </div>
   );
 }
 
-export default App;
+export default Option1;
