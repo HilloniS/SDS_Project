@@ -8,30 +8,61 @@ const Option4 = () => {
   );
   const [selectedOption] = globalStore.useState("selectedOption");
 
+  const [latMin, setLatMin] = useState("");
+  const [latMax, setLatMax] = useState("");
+  const [longMin, setLongMin] = useState("");
+  const [longMax, setLongMax] = useState("");
+  const [timestampMin, setTimestampMin] = useState("");
+  const [timestampMax, setTimestampMax] = useState("");
+
+  const changeLatMin = (event) => {
+    setLatMin(event.target.value);
+  };
+
+  const changeLatMax = (event) => {
+    setLatMax(event.target.value);
+  };
+
+  const changeLongMin = (event) => {
+    setLongMin(event.target.value);
+  };
+
+  const changeLongMax = (event) => {
+    setLongMax(event.target.value);
+  };
+
+  const changeTimestampMin = (event) => {
+    setTimestampMin(event.target.value);
+  };
+
+  const changeTimestampMax = (event) => {
+    setTimestampMax(event.target.value);
+  };
+
   const getSpatioTemporalRangeData = async () => {
-    var timeMin = document.getElementById("timestampmin"); //1664511371;
-    var timeMax = document.getElementById("timestampmax"); //1664512676;
-    var latMin = document.getElementById("latmin"); //33.41415667570768;
-    var lonMin = document.getElementById("lonmin"); //-111.92254858414022;
-    var latMax = document.getElementById("latmax"); //33.414291502635706;
-    var lonMax = document.getElementById("lonmax"); //-111.92518396810091;
+    // var timeMin = 1664511371;
+    // var timeMax = 1664512676;
+    // var latMin = 33.41415667570768;
+    // var lonMin = -111.92254858414022;
+    // var latMax = 33.414291502635706;
+    // var lonMax = -111.92518396810091;
 
     // Calling spatioTemporalRangeData API
     console.log("Calling spatioTemporalRangeData API");
     try {
       const response = await fetch(
         "spatioTemporalRange?timeMin=" +
-          timeMin +
+          timestampMin +
           "&timeMax=" +
-          timeMax +
+          timestampMax +
           "&latMin=" +
           latMin +
           "&lonMin=" +
-          lonMin +
+          longMin +
           "&latMax=" +
           latMax +
           "&lonMax=" +
-          lonMax,
+          longMax,
         {
           method: "POST",
           mode: "no-cors",
@@ -97,7 +128,9 @@ const Option4 = () => {
         onChange={changeTimestampMax}
         value={timestampMax}
       />
-      <Button onClick={getSpatioTemporalRangeData}>Option 4</Button>
+      <Button onClick={getSpatioTemporalRangeData}>
+        Get Spatiotemporal Range
+      </Button>
     </div>
   );
 };

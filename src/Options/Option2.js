@@ -50,7 +50,7 @@ const Option2 = () => {
         type="file"
         onChange={handleFileChange}
       />
-      <Button onClick={handleClick1}>Option 2</Button>
+      <Button onClick={handleClick1}>Load Trajectory Data</Button>
     </div>
   );
 };

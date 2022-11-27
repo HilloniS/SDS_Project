@@ -6,11 +6,41 @@ const Option3 = () => {
   const [spatialRangeData] = globalStore.useState("spatialRangeData");
   const [selectedOption] = globalStore.useState("selectedOption");
 
+  const [latMin, setLatMin] = useState("");
+  const [latMax, setLatMax] = useState("");
+  const [longMin, setLongMin] = useState("");
+  const [longMax, setLongMax] = useState("");
+
+  const changeLatMin = (event) => {
+    setLatMin(event.target.value);
+
+    console.log("value is:", event.target.value);
+  };
+
+  const changeLatMax = (event) => {
+    setLatMax(event.target.value);
+
+    console.log("value is:", event.target.value);
+  };
+
+  const changeLongMin = (event) => {
+    setLongMin(event.target.value);
+
+    console.log("value is:", event.target.value);
+  };
+
+  const changeLongMax = (event) => {
+    setLongMax(event.target.value);
+
+    console.log("value is:", event.target.value);
+  };
+
   const callSpatialRange = async () => {
-    var latMin = document.getElementById("latmin"); //33.41415667570768;
-    var lonMin = document.getElementById("lonmin"); //-111.92254858414022;
-    var latMax = document.getElementById("latmax"); //33.414291502635706;
-    var lonMax = document.getElementById("lonmax"); //-111.92518396810091;
+    // var latMin = 33.41415667570768;
+    // var lonMin = -111.92254858414022;
+    // var latMax = 33.414291502635706;
+    // var lonMax = -111.92518396810091;
+    console.log(latMin, longMin, latMax, longMax);
 
     // Calling spatialRange API
     console.log("Calling spatialRange API");
@@ -19,11 +49,11 @@ const Option3 = () => {
         "spatialRange?latMin=" +
           latMin +
           "&lonMin=" +
-          lonMin +
+          longMin +
           "&latMax=" +
           latMax +
           "&lonMax=" +
-          lonMax,
+          longMax,
         {
           method: "POST",
           mode: "no-cors",
@@ -76,7 +106,7 @@ const Option3 = () => {
         onChange={changeLongMax}
         value={longMax}
       />
-      <Button onClick={callSpatialRange}>Option 3</Button>
+      <Button onClick={callSpatialRange}>Get Spatial Range</Button>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "../constants";
 import { globalStore } from "../App";
 
@@ -6,18 +6,26 @@ const Option5 = () => {
   const [knnData] = globalStore.useState("knnData");
   const [selectedOption] = globalStore.useState("selectedOption");
 
+  const [trajectoryId, setTrajectoryId] = useState("");
+  const [k, setLatK] = useState("");
+
+  const changeTrajectoryId = (event) => {
+    setTrajectoryId(event.target.value);
+  };
+
+  const changeK = (event) => {
+    setLatK(event.target.value);
+  };
+
   const getknnData = async () => {
-    var trajectoryId = document.getElementById("trajectoryid"); //0;
-    var neighbors = document.getElementById("k"); //5;
+    // var trajectoryId = 0;
+    // var neighbors = 5;
 
     // Calling knnData API
     console.log("Calling knnData API");
     try {
       const response = await fetch(
-        "knnTrajectory?trajectoryId=" +
-          trajectoryId +
-          "&neighbors=" +
-          neighbors,
+        "knnTrajectory?trajectoryId=" + trajectoryId + "&neighbors=" + k,
         {
           method: "POST",
           mode: "no-cors",
@@ -51,7 +59,7 @@ const Option5 = () => {
         onChange={changeK}
         value={k}
       />
-      <Button onClick={getknnData}>Option 5</Button>
+      <Button onClick={getknnData}>Get KNN Trajectory</Button>
     </div>
   );
 };
