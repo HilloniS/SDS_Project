@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import { Button } from './constants';
+import { Button } from '../constants';
 
 
 const Option1 = () => {
@@ -38,14 +38,10 @@ const Option1 = () => {
   console.log(data);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div>
-          <Button onClick={handleClick}>
-            Option 1
-          </Button>
-        </div>
-      </header>
+    <div>
+      <Button onClick={handleClick}>
+        Option 1
+      </Button>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import React, {useState, useRef} from 'react';
-import { Button } from './constants';
+import { Button } from '../constants';
 
 
-const Option1 = () => {
+const Option4 = () => {
 
   const inputRef = useRef(null);
 
@@ -71,25 +71,12 @@ const Option1 = () => {
   console.log(data);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <div>
-          <Button onClick={handleClick}>
-            Option 1
-          </Button>
-        </div>
-        <div>
-          <input
-          style={{display: 'none'}}
-          ref={inputRef}
-          type="file"
-          onChange={handleFileChange}
-        />
-        <button onClick={handleClick1}>Open file upload box</button>
-        </div>
-      </header>
+    <div>
+      <Button onClick={handleClick}>
+        Option 4
+      </Button>
     </div>
   );
 }
 
-export default Option1;
+export default Option4;
