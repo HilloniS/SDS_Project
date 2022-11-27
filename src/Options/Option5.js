@@ -6,9 +6,10 @@ const Option5 = () => {
   const [knnData] = globalStore.useState("knnData");
   const [selectedOption] = globalStore.useState("selectedOption");
 
-  const getknnData = async (trajectoryId, neighbors) => {
-    trajectoryId = 0;
-    neighbors = 5;
+  const getknnData = async () => {
+    var trajectoryId = document.getElementById("trajectoryid"); //0;
+    var neighbors = document.getElementById("k"); //5;
+
     // Calling knnData API
     console.log("Calling knnData API");
     try {
@@ -36,6 +37,20 @@ const Option5 = () => {
 
   return (
     <div>
+      <input
+        id="trajectoryid"
+        name="trajectoryid"
+        placeholder="Trajectory Id"
+        onChange={changeTrajectoryId}
+        value={trajectoryId}
+      />
+      <input
+        id="k"
+        name="k"
+        placeholder="Value of K"
+        onChange={changeK}
+        value={k}
+      />
       <Button onClick={getknnData}>Option 5</Button>
     </div>
   );
