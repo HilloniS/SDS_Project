@@ -1,50 +1,38 @@
-import React, {useState, useRef} from 'react';
-import { Button } from '../constants';
-
+import React, { useState, useRef } from "react";
+import { Button } from "../constants";
+import { globalStore } from "../App";
 
 const Option2 = () => {
+  const [trajectoryData] = globalStore.useState("trajectoryData");
+  const [selectedOption] = globalStore.useState("selectedOption");
 
-  const inputRef = useRef(null);
+  const callLoadTrajectoryData = async (filePath) => {
+    filePath =
+      "/Users/varsharavindra/Desktop/ASU/Coursework/SDSE-Phase-1/data/simulated_trajectories.json";
+    // Calling loadTrajectory API
+    console.log("Calling API");
+    try {
+      const response = await fetch("loadTrajectory?path=" + filePath, {
+        method: "POST",
+        mode: "no-cors",
+      });
 
-  const handleClick1 = () => {
-    inputRef.current.click();
-  };
-
-  const handleFileChange = event => {
-    const fileObj = event.target.files && event.target.files[0];
-    if (!fileObj) {
-      return;
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+      console.log("Is it waiting?");
+      globalStore.getState("trajectoryData").setValue(await response.json());
+      globalStore.getState("selectedOption").setValue(2);
+    } catch (err) {
+      console.log("ERROR!!! ", err);
     }
-
-    let value = URL.createObjectURL(event.target.files[0]);
-    console.log('value :- ', value);
-    console.log('fileObj is', fileObj);
-
-    // 👇️ reset file input
-    event.target.value = null;
-
-    // 👇️ is now empty
-    console.log(event.target.files);
-
-    // 👇️ can still access file object here
-    console.log(fileObj);
-    console.log(fileObj.name);
   };
-
 
   return (
     <div>
-      <input
-      style={{display: 'none'}}
-      ref={inputRef}
-      type="file"
-      onChange={handleFileChange}
-      />
-    <Button onClick={handleClick1}>
-      Option 2
-    </Button>
+      <Button onClick={callLoadTrajectoryData}>Option 2</Button>
     </div>
   );
-}
+};
 
 export default Option2;

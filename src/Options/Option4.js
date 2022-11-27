@@ -1,82 +1,67 @@
-import React, {useState, useRef} from 'react';
-import { Button } from '../constants';
-
+import React, { useState, useRef } from "react";
+import { Button } from "../constants";
+import { globalStore } from "../App";
 
 const Option4 = () => {
+  const [spatioTemporalRangeData] = globalStore.useState(
+    "spatioTemporalRangeData"
+  );
+  const [selectedOption] = globalStore.useState("selectedOption");
 
-  const inputRef = useRef(null);
-
-  const handleClick1 = () => {
-    inputRef.current.click();
-  };
-
-  const handleFileChange = event => {
-    const fileObj = event.target.files && event.target.files[0];
-    if (!fileObj) {
-      return;
-    }
-
-    let value = URL.createObjectURL(event.target.files[0]);
-    console.log('value :- ', value);
-    console.log('fileObj is', fileObj);
-
-    // 👇️ reset file input
-    event.target.value = null;
-
-    // 👇️ is now empty
-    console.log(event.target.files);
-
-    // 👇️ can still access file object here
-    console.log(fileObj);
-    console.log(fileObj.name);
-  };
-
-
-
-  const [data, setData] = useState({data: []});
-  const [isLoading, setIsLoading] = useState(false);
-  const [err, setErr] = useState('');
-
-  function sayHello() {
-    alert('Data Loading..');
-  }
-
-  const handleClick = async () => {
-    setIsLoading(true);
-
+  const getSpatioTemporalRangeData = async (
+    timeMin,
+    timeMax,
+    latMin,
+    lonMin,
+    latMax,
+    lonMax
+  ) => {
+    timeMin = 1664511371;
+    timeMax = 1664512676;
+    latMin = 33.41415667570768;
+    lonMin = -111.92254858414022;
+    latMax = 33.414291502635706;
+    lonMax = -111.92518396810091;
+    // Calling spatioTemporalRangeData API
+    console.log("Calling spatioTemporalRangeData API");
     try {
-      const response = await fetch('https://reqres.in/api/users', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      });
+      const response = await fetch(
+        "spatioTemporalRange?timeMin=" +
+          timeMin +
+          "&timeMax=" +
+          timeMax +
+          "&latMin=" +
+          latMin +
+          "&lonMin=" +
+          lonMin +
+          "&latMax=" +
+          latMax +
+          "&lonMax=" +
+          lonMax,
+        {
+          method: "POST",
+          mode: "no-cors",
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Error! status: ${response.status}`);
       }
-
-      const result = await response.json();
-
-      console.log('result is: ', JSON.stringify(result, null, 4));
-
-      setData(result);
+      console.log("Is it waiting?");
+      globalStore
+        .getState("spatioTemporalRangeData")
+        .setValue(await response.json());
+      globalStore.getState("selectedOption").setValue(4);
     } catch (err) {
-      setErr(err.message);
-    } finally {
-      setIsLoading(false);
+      console.log("ERROR!!! ", err);
     }
   };
 
-  console.log(data);
-
   return (
     <div>
-      <Button onClick={handleClick}>
-        Option 4
-      </Button>
+      <Button onClick={getSpatioTemporalRangeData}>Option 4</Button>
     </div>
   );
-}
+};
 
 export default Option4;

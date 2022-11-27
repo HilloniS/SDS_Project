@@ -1,82 +1,50 @@
-import React, {useState, useRef} from 'react';
-import { Button } from '../constants';
-
+import React, { useState, useRef } from "react";
+import { Button } from "../constants";
+import { globalStore } from "../App";
 
 const Option3 = () => {
+  const [spatialRangeData] = globalStore.useState("spatialRangeData");
+  const [selectedOption] = globalStore.useState("selectedOption");
 
-  const inputRef = useRef(null);
-
-  const handleClick1 = () => {
-    inputRef.current.click();
-  };
-
-  const handleFileChange = event => {
-    const fileObj = event.target.files && event.target.files[0];
-    if (!fileObj) {
-      return;
-    }
-
-    let value = URL.createObjectURL(event.target.files[0]);
-    console.log('value :- ', value);
-    console.log('fileObj is', fileObj);
-
-    // 👇️ reset file input
-    event.target.value = null;
-
-    // 👇️ is now empty
-    console.log(event.target.files);
-
-    // 👇️ can still access file object here
-    console.log(fileObj);
-    console.log(fileObj.name);
-  };
-
-
-
-  const [data, setData] = useState({data: []});
-  const [isLoading, setIsLoading] = useState(false);
-  const [err, setErr] = useState('');
-
-  function sayHello() {
-    alert('Data Loading..');
-  }
-
-  const handleClick = async () => {
-    setIsLoading(true);
-
+  const callSpatialRange = async (latMin, lonMin, latMax, lonMax) => {
+    latMin = 33.41415667570768;
+    lonMin = -111.92254858414022;
+    latMax = 33.414291502635706;
+    lonMax = -111.92518396810091;
+    // Calling spatialRange API
+    console.log("Calling spatialRange API");
     try {
-      const response = await fetch('https://reqres.in/api/users', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      });
+      const response = await fetch(
+        "spatialRange?latMin=" +
+          latMin +
+          "&lonMin=" +
+          lonMin +
+          "&latMax=" +
+          latMax +
+          "&lonMax=" +
+          lonMax,
+        {
+          method: "POST",
+          mode: "no-cors",
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Error! status: ${response.status}`);
       }
-
-      const result = await response.json();
-
-      console.log('result is: ', JSON.stringify(result, null, 4));
-
-      setData(result);
+      console.log("Is it waiting?");
+      globalStore.getState("spatialRangeData").setValue(await response.json());
+      globalStore.getState("selectedOption").setValue(3);
     } catch (err) {
-      setErr(err.message);
-    } finally {
-      setIsLoading(false);
+      console.log("ERROR!!! ", err);
     }
   };
 
-  console.log(data);
-
   return (
     <div>
-      <Button >
-        Option 3
-      </Button>
-  </div>
+      <Button onClick={callSpatialRange}>Option 3</Button>
+    </div>
   );
-}
+};
 
 export default Option3;
