@@ -4,78 +4,88 @@ import { Button } from '../constants';
 
 const Option4 = () => {
 
-  const inputRef = useRef(null);
+  const [latMin, setLatMin] = useState('');
+  const [latMax, setLatMax] = useState('');
+  const [longMin, setLongMin] = useState('');
+  const [longMax, setLongMax] = useState('');
+  const [timestampMin, setTimestampMin] = useState('');
+  const [timestampMax, setTimestampMax] = useState('');
 
-  const handleClick1 = () => {
-    inputRef.current.click();
+  const changeLatMin = event => {
+    setLatMin(event.target.value);
   };
 
-  const handleFileChange = event => {
-    const fileObj = event.target.files && event.target.files[0];
-    if (!fileObj) {
-      return;
-    }
-
-    let value = URL.createObjectURL(event.target.files[0]);
-    console.log('value :- ', value);
-    console.log('fileObj is', fileObj);
-
-    // 👇️ reset file input
-    event.target.value = null;
-
-    // 👇️ is now empty
-    console.log(event.target.files);
-
-    // 👇️ can still access file object here
-    console.log(fileObj);
-    console.log(fileObj.name);
+  const changeLatMax = event => {
+    setLatMax(event.target.value);
   };
 
-
-
-  const [data, setData] = useState({data: []});
-  const [isLoading, setIsLoading] = useState(false);
-  const [err, setErr] = useState('');
-
-  function sayHello() {
-    alert('Data Loading..');
-  }
-
-  const handleClick = async () => {
-    setIsLoading(true);
-
-    try {
-      const response = await fetch('https://reqres.in/api/users', {
-        method: 'GET',
-        headers: {
-          Accept: 'application/json',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error! status: ${response.status}`);
-      }
-
-      const result = await response.json();
-
-      console.log('result is: ', JSON.stringify(result, null, 4));
-
-      setData(result);
-    } catch (err) {
-      setErr(err.message);
-    } finally {
-      setIsLoading(false);
-    }
+  const changeLongMin = event => {
+    setLongMin(event.target.value);
   };
 
-  console.log(data);
+  const changeLongMax = event => {
+    setLongMax(event.target.value);
+  };
+
+  const changeTimestampMin = event => {
+    setTimestampMin(event.target.value);
+  };
+
+  const changeTimestampMax = event => {
+    setTimestampMax(event.target.value);
+  };
+
 
   return (
     <div>
-      <Button onClick={handleClick}>
+      <input
+        id="latmin"
+        name="latmin"
+        placeholder='Minimum Latitude'
+        onChange={changeLatMin}
+        value={latMin}
+      />
+      <input
+        id="latmax"
+        name="latmax"
+        placeholder='Maximum Latitude'
+        onChange={changeLatMax}
+        value={latMax}
+      />
+      <br></br>
+      <input
+        id="longmin"
+        name="longmin"
+        placeholder='Minimum Longitude'
+        onChange={changeLongMin}
+        value={longMin}
+      />
+      <input
+        id="longmax"
+        name="longmax"
+        placeholder='Maximum Longitude'
+        onChange={changeLongMax}
+        value={longMax}
+      />
+      <br></br>
+      <input
+        id="timestampmin"
+        name="timestampmin"
+        placeholder='Minimum Timestamp'
+        onChange={changeTimestampMin}
+        value={timestampMin}
+      />
+      <input
+        id="timestampmax"
+        name="timestampmax"
+        placeholder='Maximum Timestamp'
+        onChange={changeTimestampMax}
+        value={timestampMax}
+      />    
+      <Button >
         Option 4
       </Button>
-    </div>
+  </div>
   );
 }
 
