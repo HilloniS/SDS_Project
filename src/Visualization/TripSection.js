@@ -1,5 +1,6 @@
 import React from "react";
 import { globalStore } from "../App";
+import RenderDeck from "./RenderDeck";
 
 const TripSection = () => {
   const [selectedOption] = globalStore.useState("selectedOption");
@@ -11,7 +12,11 @@ const TripSection = () => {
   const [knnData] = globalStore.useState("knnData");
   switch (selectedOption) {
     case 1:
-      return <div className="tripsViz">Hello World!</div>;
+      return (
+        <div className="tripsViz">
+          <RenderDeck />
+        </div>
+      );
     case 2:
       console.log("Inside trip section trajectoryData: ", trajectoryData);
       return <div className="tripsViz">trajectoryData</div>;

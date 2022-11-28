@@ -4,6 +4,7 @@ import TripSection from "./Visualization/TripSection";
 import styled, { css } from "styled-components";
 import APIOptions from "./Options/APIOptions";
 import { createStore } from "state-pool";
+import RenderDeck from "./Visualization/RenderDeck";
 
 export const globalStore = createStore();
 globalStore.setState("trajectoryData", null);
